@@ -1,6 +1,7 @@
-from flask import Flask
-from wsgiref import simple_server
 import logging
+from wsgiref import simple_server
+
+from flask import Flask
 
 from esched_meta.endpoints.groups_endpoints import groups_bp
 

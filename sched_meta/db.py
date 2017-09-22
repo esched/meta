@@ -2,9 +2,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 from sqlalchemy.orm.session import Session as SessionType
 
-from esched_meta.models import Base
+from sched_meta.models import Base
 
-engine = create_engine("postgres://postgres@localhost/esched_meta", echo=True)
+engine = create_engine("postgres://postgres@localhost/sched_meta", echo=True)
 
 Session = sessionmaker(bind=engine)
 db_session = scoped_session(Session)  # type: SessionType

@@ -1,4 +1,4 @@
-from esched_meta.models import Base
+from sched_meta.models import Base
 
 from sqlalchemy import Column, Integer, String
 

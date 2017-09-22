@@ -2,8 +2,8 @@ import logging
 
 from flask import Flask
 
-from esched_meta.db import db_session
-from esched_meta.endpoints import groups_endpoints, users_endpoints
+from sched_meta.db import db_session
+from sched_meta.endpoints import groups_endpoints, users_endpoints
 
 logging.basicConfig(level=logging.INFO)
 

@@ -1,5 +1,5 @@
-from esched_meta import db
-from esched_meta.app import app
+from sched_meta import db
+from sched_meta.app import app
 
 import logging
 

@@ -1,8 +1,8 @@
 from flask import request, Blueprint, jsonify
 from flask import abort
 
-from esched_meta.db import db_session
-from esched_meta.models import User
+from sched_meta.db import db_session
+from sched_meta.models import User
 
 bp = Blueprint(__name__, __name__)
 

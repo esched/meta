@@ -12,3 +12,10 @@ class User(Base):
 
     def __repr__(self):
         return f"<User(id={self.id}, th_id={self.tg_id}, tg_username={self.tg_username})>"
+
+    def as_json(self):
+        return {
+            "id": self.id,
+            "tg_id": self.tg_id,
+            "tg_username": self.tg_username
+        }

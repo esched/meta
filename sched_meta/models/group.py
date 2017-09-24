@@ -5,7 +5,7 @@ from sched_meta.models import Base, User
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
-from sched_meta.models.associations import UserGroupAssociationTable
+from sched_meta.models.associations import user_group_association_table
 
 
 class Group(Base):
@@ -17,7 +17,7 @@ class Group(Base):
     admin = relationship(User)
     invite_code = Column(String, unique=True, default=lambda: str(uuid.uuid4()))
 
-    users = relationship(User, secondary=UserGroupAssociationTable, back_populates="groups")
+    users = relationship(User, secondary=user_group_association_table, back_populates="groups")
 
     def __init__(self, admin: User, title: str):
         self.admin = admin

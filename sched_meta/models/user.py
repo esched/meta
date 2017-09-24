@@ -4,7 +4,7 @@ from sched_meta.models import Base
 
 from sqlalchemy import Column, Integer, String, Table, ForeignKey
 
-from sched_meta.models.associations import UserGroupAssociationTable
+from sched_meta.models.associations import user_group_association_table
 
 
 class User(Base):
@@ -14,7 +14,7 @@ class User(Base):
     tg_id = Column(Integer)
     tg_username = Column(String)
 
-    groups = relationship('Group', secondary=UserGroupAssociationTable, back_populates="users")
+    groups = relationship('Group', secondary=user_group_association_table, back_populates="users")
 
     def __repr__(self):
         return f"<User(id={self.id}, th_id={self.tg_id}, tg_username={self.tg_username})>"

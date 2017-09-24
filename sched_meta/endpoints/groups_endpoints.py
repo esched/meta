@@ -25,6 +25,41 @@ def get_by_invite_code(code):
     return jsonify(group.as_json())
 
 
+@bp.route("/<int:group_id>/join", methods=["POST"])
+def join(group_id):
+    group = db_session.query(Group).get(group_id)  # type: Group
+    if not group:
+        abort(422, "Unknown group")
+
+    user = db_session.query(User).get(request.form["user_id"])  # type: User
+    if not user:
+        abort(422, "Unknown user")
+
+    user.groups.append(group)
+    db_session.add(user)
+    db_session.commit()
+
+    return "OK"
+
+
+@bp.route("/<int:group_id>/leave", methods=["POST"])
+def leave(group_id):
+    group = db_session.query(Group).get(group_id)  # type: Group
+    if not group:
+        abort(422, "Unknown group")
+
+    user = db_session.query(User).get(request.form["user_id"])  # type: User
+    if not user:
+        abort(422, "Unknown user")
+
+    if group in user.groups:
+        user.groups.remove(group)
+        db_session.add(user)
+        db_session.commit()
+
+    return "OK"
+
+
 @bp.route("/create", methods=["PUT"])
 def create():
     admin_id = request.form["admin_id"]

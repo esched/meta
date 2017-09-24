@@ -17,6 +17,14 @@ def get(group_id):
     return jsonify(group.as_json())
 
 
+@bp.route("/byInviteCode/<code>", methods=["GET"])
+def get_by_invite_code(code):
+    group = db_session.query(Group).filter(Group.invite_code == code).first()  # type: Group
+    if not group:
+        abort(422, "Unknown group")
+    return jsonify(group.as_json())
+
+
 @bp.route("/create", methods=["PUT"])
 def create():
     admin_id = request.form["admin_id"]

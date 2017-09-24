@@ -25,6 +25,17 @@ def get_by_invite_code(code):
     return jsonify(group.as_json())
 
 
+@bp.route("/<int:group_id>", methods=["DELETE"])
+def delete(group_id):
+    group = db_session.query(Group).get(group_id)  # type: Group
+    if not group:
+        abort(422, "Unknown group")
+
+    db_session.delete(group)
+    db_session.commit()
+    return "OK"
+
+
 @bp.route("/<int:group_id>/join", methods=["POST"])
 def join(group_id):
     group = db_session.query(Group).get(group_id)  # type: Group

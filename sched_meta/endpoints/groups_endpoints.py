@@ -9,6 +9,14 @@ from sched_meta.models import User, Group
 bp = flask.Blueprint("groups_endpoints", __name__)
 
 
+@bp.route("/<int:group_id>", methods=["GET"])
+def get(group_id):
+    group = db_session.query(Group).get(group_id)  # type: Group
+    if not group:
+        abort(422, "Unknown group")
+    return jsonify(group.as_json())
+
+
 @bp.route("/create", methods=["PUT"])
 def create():
     admin_id = request.form["admin_id"]
@@ -27,7 +35,7 @@ def create():
 
 
 @bp.route("/<int:group_id>/rotateInviteCode", methods=["PATCH"])
-def issue_invite(group_id):
+def rotate_invite_code(group_id):
     group = db_session.query(Group).get(group_id)  # type: Group
     if not group:
         abort(422, "Unknown group")

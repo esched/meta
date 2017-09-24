@@ -1,3 +1,5 @@
+import uuid
+
 import flask
 from flask import request, abort, jsonify
 
@@ -18,6 +20,19 @@ def create():
     title = request.form["title"]
 
     group = Group(admin, title)
+    db_session.add(group)
+    db_session.commit()
+
+    return jsonify(group.as_json())
+
+
+@bp.route("/<int:group_id>/rotateInviteCode", methods=["PATCH"])
+def issue_invite(group_id):
+    group = db_session.query(Group).get(group_id)  # type: Group
+    if not group:
+        abort(422, "Unknown group")
+
+    group.invite_code = str(uuid.uuid4())
     db_session.add(group)
     db_session.commit()
 

@@ -1,3 +1,5 @@
+import uuid
+
 from sched_meta.models import Base, User
 
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -11,6 +13,7 @@ class Group(Base):
     title = Column(String)
     admin_id = Column(Integer, ForeignKey('users.id'))
     admin = relationship(User)
+    invite_code = Column(String, unique=True, default=lambda: str(uuid.uuid4()))
 
     def __init__(self, admin: User, title: str):
         self.admin = admin
@@ -23,5 +26,6 @@ class Group(Base):
         return {
             "id": self.id,
             "title": self.title,
-            "admin": self.admin.as_json()
+            "admin": self.admin.as_json(),
+            "invite_code": self.invite_code
         }

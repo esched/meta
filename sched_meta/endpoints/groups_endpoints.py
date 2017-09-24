@@ -13,7 +13,7 @@ bp = flask.Blueprint("groups_endpoints", __name__)
 def get(group_id):
     group = db_session.query(Group).get(group_id)  # type: Group
     if not group:
-        abort(422, "Unknown group")
+        abort(404, "Unknown group")
     return jsonify(group.as_json())
 
 
@@ -21,7 +21,7 @@ def get(group_id):
 def get_members(group_id):
     group = db_session.query(Group).get(group_id)  # type: Group
     if not group:
-        abort(422, "Unknown group")
+        abort(404, "Unknown group")
 
     result = list(map(lambda u: u.as_json(), group.users))
     return jsonify(result)

@@ -32,3 +32,21 @@ def get_user_by_tg_id():
     db_session.commit()
 
     return jsonify(user.as_json())
+
+
+@bp.route("/<int:user_id>", methods=["GET"])
+def get(user_id):
+    user = db_session.query(User).get(user_id)  # type: User
+    if not user:
+        abort(404, "Unknown user")
+    return jsonify(user.as_json())
+
+
+@bp.route("/<int:user_id>/groups", methods=["GET"])
+def get_groups(user_id):
+    user = db_session.query(User).get(user_id)  # type: User
+    if not user:
+        abort(404, "Unknown user")
+
+    result = list(map(lambda g: g.as_json(), user.groups))
+    return jsonify(result)

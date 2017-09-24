@@ -17,6 +17,16 @@ def get(group_id):
     return jsonify(group.as_json())
 
 
+@bp.route("/<int:group_id>/members", methods=["GET"])
+def get_members(group_id):
+    group = db_session.query(Group).get(group_id)  # type: Group
+    if not group:
+        abort(422, "Unknown group")
+
+    result = list(map(lambda u: u.as_json(), group.users))
+    return jsonify(result)
+
+
 @bp.route("/byInviteCode/<code>", methods=["GET"])
 def get_by_invite_code(code):
     group = db_session.query(Group).filter(Group.invite_code == code).first()  # type: Group
